@@ -1,0 +1,14 @@
+{
+  "required": false,
+  "minVersion": "0.8",
+  "package": "net.danielgolan.boson.mixin",
+  "compatibilityLevel": "JAVA_15",
+  "mixins": [
+  ],
+  "client": [
+    "BosonMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -1,35 +1,35 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "boson",
   "version": "${version}",
 
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "Boson",
+  "description": "A mod inspired by The Quark Mod",
   "authors": [
-    "Me!"
+    "DanielGolan"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "null",
+    "sources": "https://github.com/DanielGolan/boson"
   },
 
   "license": "CC0-1.0",
-  "icon": "assets/modid/icon.png",
+  "icon": "assets/boson/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.fabricmc.example.ExampleMod"
+      "net.danielgolan.boson.Boson"
     ]
   },
   "mixins": [
-    "modid.mixins.json"
+    "boson.mixins.json"
   ],
 
   "depends": {
-    "fabricloader": ">=0.7.4",
+    "fabricloader": "*",
     "fabric": "*",
-    "minecraft": "1.16.x"
+    "minecraft": "*"
   },
   "suggests": {
     "another-mod": "*"
