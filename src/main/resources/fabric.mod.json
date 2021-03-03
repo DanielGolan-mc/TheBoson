@@ -22,9 +22,7 @@
       "net.danielgolan.boson.Boson"
     ]
   },
-  "mixins": [
-    "boson.mixins.json"
-  ],
+  "mixins": [],
 
   "depends": {
     "fabricloader": "*",
