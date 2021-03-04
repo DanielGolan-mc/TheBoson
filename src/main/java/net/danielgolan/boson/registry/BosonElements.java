@@ -23,7 +23,7 @@ public final class BosonElements {
         Registry.register(Registry.BLOCK, new Identifier(Boson.BOSON_MOD_ID, path), block);
     }
 
-    public static class Blocks {
+    public static final class Blocks {
         public static final Block RUBY_BLOCK = new Metal(3, 5, 30, 3);
 
         public static void register() {
@@ -32,7 +32,7 @@ public final class BosonElements {
 
     }
 
-    public static class Items {
+    public static final class Items {
         public static final Item RUBY = new Material();
 
         public static final BlockItem RUBY_BLOCK = new BuildingBlock(Blocks.RUBY_BLOCK);

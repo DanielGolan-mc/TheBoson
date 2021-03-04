@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "boson:ruby"
+    }
+  },
+  "result": {
+    "item": "boson:ruby_block",
+    "count": 1
+  },
+  "group": "boson:ruby_block"
+}
