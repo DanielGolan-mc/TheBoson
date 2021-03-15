@@ -1,0 +1,6 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "boson:items/white_gold_pickaxe"
+  }
+}
