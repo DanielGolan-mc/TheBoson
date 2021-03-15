@@ -3,7 +3,7 @@ package net.danielgolan.boson.items;
 import net.minecraft.item.*;
 import net.minecraft.recipe.Ingredient;
 
-public class ToolSet implements net.minecraft.item.ToolMaterial {
+public class ToolSet implements ToolMaterial {
     public final int DURABILITY, MINING_LEVEL, ENCHANTABILITY;
     public final float MINING_LEVEL_SPEED_MULTIPILER, ATTACK_DAMAGE;
     public final Ingredient REPAIR_INGREDIENT;
@@ -56,7 +56,7 @@ public class ToolSet implements net.minecraft.item.ToolMaterial {
 
     public class Sword extends SwordItem {
         public Sword(int attackDamage, float attackSpeed) {
-            super(ToolSet.this, attackDamage, attackSpeed, new Settings().group(ItemGroup.TOOLS));
+            super(ToolSet.this, attackDamage, attackSpeed, new Settings().group(ItemGroup.COMBAT));
         }
     }
 
@@ -80,7 +80,7 @@ public class ToolSet implements net.minecraft.item.ToolMaterial {
 
     public static class WhiteGold extends ToolSet {
         public static final Item[] WHITE_GOLD_INGREDIENTS = new Item[]{
-                Items.GOLD_INGOT
+                Items.GOLD_INGOT, Items.QUARTZ
         };
 
         public WhiteGold() {
