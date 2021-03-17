@@ -1,6 +1,6 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "all": "boson:blocks/ruby_block"
+    "all": "boson:blocks/chiseled_dripstone"
   }
 }

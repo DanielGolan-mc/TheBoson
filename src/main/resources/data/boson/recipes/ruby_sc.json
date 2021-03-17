@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "ingredient": {
-    "item": "boson:ruby_block"
-  },
-  "result": "boson:ruby",
-  "group": "boson:ruby",
-  "count": 9
-}

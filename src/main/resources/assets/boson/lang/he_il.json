@@ -1,5 +1,8 @@
 {
-  "item.boson.ruby": "אודם",
-  "block.boson.ruby_block": "קוביית אודם",
-  "itemGroup.boson.experimental": "קוביות נוספות"
+  "itemGroup.boson.experimental": "קוביות נוספות",
+  "block.boson.dripstone_bricks": "לבני אבן נוטפת",
+  "block.boson.dripstone_pillar": "עמוד אבן נוטפת",
+  "block.boson.dripstone_tiles": "לבני אבן נוטפת קטנות",
+  "block.boson.chiseled_dripstone": "אבן נוטפת מסותתת",
+  "block.boson.smooth_dripstone": "אבן נוטפת חלקה"
 }

@@ -1,5 +1,8 @@
 {
-  "item.boson.ruby": "Ruby",
-  "block.boson.ruby_block": "Block of Ruby",
-  "itemGroup.boson.experimental": "Experimental Blocks"
+  "itemGroup.boson.experimental": "Experimental Blocks",
+  "block.boson.dripstone_bricks": "Dripstone Bricks",
+  "block.boson.dripstone_pillar": "Dripstone Pillar",
+  "block.boson.dripstone_tiles": "Dripstone Tiles",
+  "block.boson.chiseled_dripstone": "Chiseled Dripstone",
+  "block.boson.smooth_dripstone": "Smooth Dripstone"
 }
