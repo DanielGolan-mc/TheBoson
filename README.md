@@ -6,7 +6,7 @@
 
 class TheBosonMod implements FabricMod {
     /**
-     * Inspired by: The Quark Mod
+     * @inspired The Quark Mod
      * @author DanielGolan
      */
     TheBosonMod() {
