@@ -1,11 +1,12 @@
 package net.danielgolan.boson;
 
-import net.danielgolan.boson.integration.FuelIntegration;
 import net.danielgolan.boson.integration.LootTablesIntegration;
 import net.danielgolan.boson.registry.BosonElements;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.registry.FuelRegistry;
+import net.minecraft.item.Items;
 
-public class Boson implements ModInitializer {
+public class Boson implements ModInitializer{
 
     public static final String BOSON_MOD_ID = "boson";
     public static final String MINECRAFT_ID = "minecraft";
@@ -13,16 +14,16 @@ public class Boson implements ModInitializer {
     @Override
     public void onInitialize() {
         BosonElements.register();
-        BosonElements.registerCreativeGroups();
         LootTablesIntegration.modifyLootTables();
-        FuelIntegration.registerFuels();
+
+        FuelRegistry.INSTANCE.add(Items.MAGMA_BLOCK, inTicks(2.5f));
     }
 
-    public static int inTicks(double seconds) {
-        return (int) (seconds * 20);
+    public static long inTicks(double seconds) {
+        return (long) (seconds * 20);
     }
 
     public static int inTicks(float minutes) {
-        return inTicks(minutes * 60.0);
+        return (int) ((minutes / 60) * 20);
     }
 }

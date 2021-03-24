@@ -4,5 +4,6 @@
   "block.boson.dripstone_pillar": "Dripstone Pillar",
   "block.boson.dripstone_tiles": "Dripstone Tiles",
   "block.boson.chiseled_dripstone": "Chiseled Dripstone",
-  "block.boson.smooth_dripstone": "Smooth Dripstone"
+  "block.boson.smooth_dripstone": "Smooth Dripstone",
+  "enchantment.boson.ice_aspect": "Ice Aspect"
 }

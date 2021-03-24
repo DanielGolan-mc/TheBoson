@@ -2,8 +2,12 @@ package net.danielgolan.boson.registry;
 
 import net.danielgolan.boson.Boson;
 import net.danielgolan.boson.blocks.Stone;
+import net.danielgolan.boson.enchantments.IceAspect;
+import net.danielgolan.boson.gameplay.CreativeMode;
 import net.danielgolan.boson.items.BuildingBlock;
 import net.minecraft.block.Block;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.item.Item;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
@@ -14,12 +18,20 @@ public final class BosonElements {
     public static void register(){
         BosonElements.Blocks.register();
         BosonElements.Items.register();
+        BosonElements.Enchantments.register();
     }
     private static void register(String path, Item item){
         Registry.register(Registry.ITEM, new Identifier(Boson.BOSON_MOD_ID, path), item);
     }
     private static void register(String path, Block block){
         Registry.register(Registry.BLOCK, new Identifier(Boson.BOSON_MOD_ID, path), block);
+    }
+    private static void register(String path, Enchantment enchantment){
+        Registry.register(Registry.ENCHANTMENT, new Identifier(Boson.BOSON_MOD_ID, path), enchantment);
+    }
+    public static void registerCreativeGroups(){
+        System.out.print(CreativeMode.EXPERIMENTAL.getName() + ": " +
+                (CreativeMode.EXPERIMENTAL.isTopRow() ? "Top" : "Bottom") + "row");
     }
 
     public static final class Blocks {
@@ -51,6 +63,14 @@ public final class BosonElements {
             BosonElements.register("dripstone_tiles", DRIP_STONE_TILES);
             BosonElements.register("chiseled_dripstone", DRIP_STONE_CHISEL);
             BosonElements.register("smooth_dripstone", DRIP_STONE_SMOOTH);
+        }
+    }
+
+    public static final class Enchantments {
+        public static final Enchantment ICE_ASPECT = new IceAspect(EnchantmentTarget.BOW);
+
+        public static void register() {
+            BosonElements.register("ice_aspect", ICE_ASPECT);
         }
     }
 }
