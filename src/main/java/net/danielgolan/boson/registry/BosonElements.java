@@ -2,10 +2,13 @@ package net.danielgolan.boson.registry;
 
 import net.danielgolan.boson.Boson;
 import net.danielgolan.boson.blocks.Stone;
+import net.danielgolan.boson.blocks.containers.FuelChest;
 import net.danielgolan.boson.enchantments.IceAspect;
 import net.danielgolan.boson.gameplay.CreativeMode;
 import net.danielgolan.boson.items.BuildingBlock;
 import net.minecraft.block.Block;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.item.Item;
@@ -16,9 +19,9 @@ import net.minecraft.util.registry.Registry;
 public final class BosonElements {
 
     public static void register(){
-        BosonElements.Blocks.register();
-        BosonElements.Items.register();
-        BosonElements.Enchantments.register();
+        Blocks.register();
+        Items.register();
+        Enchantments.register();
     }
     private static void register(String path, Item item){
         Registry.register(Registry.ITEM, new Identifier(Boson.BOSON_MOD_ID, path), item);
@@ -28,6 +31,9 @@ public final class BosonElements {
     }
     private static void register(String path, Enchantment enchantment){
         Registry.register(Registry.ENCHANTMENT, new Identifier(Boson.BOSON_MOD_ID, path), enchantment);
+    }
+    private static void register(String path, BlockEntityType<? extends BlockEntity> blockEntityType){
+        Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(Boson.BOSON_MOD_ID, path), blockEntityType);
     }
     public static void registerCreativeGroups(){
         System.out.print(CreativeMode.EXPERIMENTAL.getName() + ": " +
@@ -40,6 +46,7 @@ public final class BosonElements {
         public static final Block DRIP_STONE_CHISEL = new Stone(BlockSoundGroup.DRIPSTONE_BLOCK);
         public static final Block DRIP_STONE_SMOOTH = new Stone(BlockSoundGroup.DRIPSTONE_BLOCK);
         public static final Block DRIP_STONE_TILES  = new Stone(BlockSoundGroup.DRIPSTONE_BLOCK);
+        public static final Block FUEL_CHEST = new FuelChest();
 
         public static void register() {
             BosonElements.register("dripstone_bricks", DRIP_STONE_BRICKS);

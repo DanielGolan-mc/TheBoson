@@ -122,7 +122,7 @@ public class ToolSet implements ToolMaterial, ArmorMaterial {
 
     public class Armor extends ArmorItem {
         public Armor(EquipmentSlot equipmentSlot) {
-            super(ToolSet.this, equipmentSlot, new Item.Settings().group(ItemGroup.COMBAT));
+            super(ToolSet.this, equipmentSlot, new Settings().group(ItemGroup.COMBAT));
         }
     }
 
