@@ -1,17 +1,24 @@
 package net.danielgolan.boson.blocks.containers;
 
+import net.danielgolan.boson.registry.BosonElements;
 import net.minecraft.block.BarrelBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
 import net.minecraft.block.entity.BarrelBlockEntity;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.screen.GenericContainerScreenHandler;
-import net.minecraft.screen.NamedScreenHandlerFactory;
+import net.minecraft.screen.ScreenHandler;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -30,14 +37,28 @@ public class FuelChest extends BarrelBlock {
         return new Entity(pos, state);
     }
 
-    @Nullable
-    @Override
-    public NamedScreenHandlerFactory createScreenHandlerFactory(BlockState state, World world, BlockPos pos) {
-        return super.createScreenHandlerFactory(state, world, pos);
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+        if (world.isClient) {
+            return ActionResult.SUCCESS;
+        } else {
+            BlockEntity blockEntity = world.getBlockEntity(pos);
+            if (blockEntity instanceof Entity) player.openHandledScreen((Entity) blockEntity);
+
+            return ActionResult.CONSUME;
+        }
     }
 
-    protected static class Entity extends BarrelBlockEntity {
-        protected Entity(BlockPos pos, BlockState state) {
+    public static class Entity extends BarrelBlockEntity {
+        public static BlockEntityType<Entity> TYPE;
+        public static void register(){
+            /*
+            TYPE = Registry.register(Registry.BLOCK_ENTITY_TYPE, "boson:fuel_chest",
+                    BlockEntityType.Builder.create(FuelChest.Entity::new, BosonElements.Blocks.FUEL_CHEST)
+                            .build(null));
+             */
+        }
+
+        public Entity(BlockPos pos, BlockState state) {
             super(pos, state);
         }
 
@@ -52,7 +73,7 @@ public class FuelChest extends BarrelBlock {
         }
 
         @Override
-        protected net.minecraft.screen.ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
+        protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
             return GenericContainerScreenHandler.createGeneric9x6(syncId, playerInventory, this);
         }
     }

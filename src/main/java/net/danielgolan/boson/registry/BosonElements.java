@@ -6,6 +6,7 @@ import net.danielgolan.boson.blocks.containers.FuelChest;
 import net.danielgolan.boson.enchantments.IceAspect;
 import net.danielgolan.boson.gameplay.CreativeMode;
 import net.danielgolan.boson.items.BuildingBlock;
+import net.danielgolan.boson.items.DecorationBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
@@ -22,17 +23,18 @@ public final class BosonElements {
         Blocks.register();
         Items.register();
         Enchantments.register();
+        FuelChest.Entity.register();
     }
-    private static void register(String path, Item item){
+    public static void register(String path, Item item){
         Registry.register(Registry.ITEM, new Identifier(Boson.BOSON_MOD_ID, path), item);
     }
-    private static void register(String path, Block block){
+    public static void register(String path, Block block){
         Registry.register(Registry.BLOCK, new Identifier(Boson.BOSON_MOD_ID, path), block);
     }
-    private static void register(String path, Enchantment enchantment){
+    public static void register(String path, Enchantment enchantment){
         Registry.register(Registry.ENCHANTMENT, new Identifier(Boson.BOSON_MOD_ID, path), enchantment);
     }
-    private static void register(String path, BlockEntityType<? extends BlockEntity> blockEntityType){
+    public static void register(String path, BlockEntityType<? extends BlockEntity> blockEntityType){
         Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(Boson.BOSON_MOD_ID, path), blockEntityType);
     }
     public static void registerCreativeGroups(){
@@ -54,6 +56,7 @@ public final class BosonElements {
             BosonElements.register("dripstone_tiles", DRIP_STONE_TILES);
             BosonElements.register("chiseled_dripstone", DRIP_STONE_CHISEL);
             BosonElements.register("smooth_dripstone", DRIP_STONE_SMOOTH);
+            BosonElements.register("fuel_chest", FUEL_CHEST);
         }
     }
 
@@ -63,6 +66,7 @@ public final class BosonElements {
         public static final Item DRIP_STONE_CHISEL = new BuildingBlock(Blocks.DRIP_STONE_CHISEL);
         public static final Item DRIP_STONE_SMOOTH = new BuildingBlock(Blocks.DRIP_STONE_SMOOTH);
         public static final Item DRIP_STONE_TILES  = new BuildingBlock(Blocks.DRIP_STONE_TILES);
+        public static final Item FUEL_CHEST        = new DecorationBlock(Blocks.FUEL_CHEST);
 
         public static void register() {
             BosonElements.register("dripstone_bricks", DRIP_STONE_BRICKS);
@@ -70,6 +74,7 @@ public final class BosonElements {
             BosonElements.register("dripstone_tiles", DRIP_STONE_TILES);
             BosonElements.register("chiseled_dripstone", DRIP_STONE_CHISEL);
             BosonElements.register("smooth_dripstone", DRIP_STONE_SMOOTH);
+            BosonElements.register("fuel_chest", FUEL_CHEST);
         }
     }
 
