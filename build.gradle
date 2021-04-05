@@ -11,10 +11,7 @@ version = project.mod_version
 group = project.maven_group
 
 repositories {
-	maven {
-		name = "CottonMC"
-		url = "https://server.bbkr.space/artifactory/libs-release"
-	}
+
 }
 
 dependencies {
@@ -28,8 +25,6 @@ dependencies {
 
 	// PSA: Some older mods, compiled on Loom 0.2.1, might have outdated Maven POMs.
 	// You may need to force-disable transitiveness on them.
-
-	modImplementation "io.github.cottonmc:LibGui:${project.lib_gui_version}"
 }
 
 processResources {

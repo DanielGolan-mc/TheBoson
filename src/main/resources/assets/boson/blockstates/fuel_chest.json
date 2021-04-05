@@ -1,37 +1,40 @@
 {
   "variants": {
-    "boson:fuel_chest#facing=west,open=true": {
-      "model": "boson:block/fuel_chest_open_west"
+    "facing=west,open=true": {
+      "model": "boson:block/fuel_chest/open/west"
     },
-    "boson:fuel_chest#facing=down,open=true": {
-      "model": "boson:block/fuel_chest_open_down"
+    "facing=down,open=true": {
+      "model": "boson:block/fuel_chest/open/down"
     },
-    "boson:fuel_chest#facing=east,open=true": {
-      "model": "boson:block/fuel_chest_open_east"
+    "facing=east,open=true": {
+      "model": "boson:block/fuel_chest/open/east"
     },
-    "boson:fuel_chest#facing=up,open=true": {
-      "model": "boson:block/fuel_chest_open_up"
+    "facing=up,open=true": {
+      "model": "boson:block/fuel_chest/open/up"
     },
-    "boson:fuel_chest#facing=south,open=true": {
-      "model": "boson:block/fuel_chest_open_south"
+    "facing=south,open=true": {
+      "model": "boson:block/fuel_chest/open/south"
     },
-    "boson:fuel_chest#facing=north,open=true": {
-      "model": "boson:block/fuel_chest_open"
+    "facing=north,open=true": {
+      "model": "boson:block/fuel_chest/open/north"
     },
-    "boson:fuel_chest#facing=down,open=false": {
-      "model": "boson:block/fuel_chest_down"
+    "facing=down,open=false": {
+      "model": "boson:block/fuel_chest/down"
     },
-    "boson:fuel_chest#facing=west,open=false": {
-      "model": "boson:block/fuel_chest_west"
+    "facing=west,open=false": {
+      "model": "boson:block/fuel_chest/west"
     },
-    "boson:fuel_chest#facing=east,open=false": {
-      "model": "boson:block/fuel_chest_east"
+    "facing=east,open=false": {
+      "model": "boson:block/fuel_chest/east"
     },
-    "boson:fuel_chest#facing=south,open=false": {
-      "model": "boson:block/fuel_chest_south"
+    "facing=south,open=false": {
+      "model": "boson:block/fuel_chest/south"
     },
-    "boson:fuel_chest#facing=north,open=false": {
-      "model": "boson:block/fuel_chest"
+    "facing=north,open=false": {
+      "model": "boson:block/fuel_chest/north"
+    },
+    "facing=up,open=false": {
+      "model": "boson:block/fuel_chest/up"
     }
   }
 }
