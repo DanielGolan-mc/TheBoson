@@ -1,26 +1,23 @@
 package net.danielgolan.boson.blocks.containers;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockEntityProvider;
+import net.minecraft.block.BarrelBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
+import net.minecraft.block.entity.BarrelBlockEntity;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.screen.GenericContainerScreenHandler;
+import net.minecraft.screen.NamedScreenHandlerFactory;
+import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-public class FuelChest extends Block implements BlockEntityProvider {
-    //public static BlockEntityType<FuelEntity> ENTITY_TYPE;
-
-    public static void register(){
-        /*
-        ENTITY_TYPE = Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(Boson.BOSON_MOD_ID, "fuel_chest"),
-                BlockEntityType.Builder.create(new FuelEntity(), BosonElements.Blocks.FUEL_CHEST)
-        .build());
-        */
-    }
-
+public class FuelChest extends BarrelBlock {
     public FuelChest() {
-        this(Settings.of(Material.STONE));
+        this(Settings.of(Material.WOOD).strength(2.5F).sounds(BlockSoundGroup.WOOD));
     }
 
     public FuelChest(Settings settings) {
@@ -30,14 +27,33 @@ public class FuelChest extends Block implements BlockEntityProvider {
     @Nullable
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return null;
+        return new Entity(pos, state);
     }
 
-    /*
-    public static class FuelEntity extends BlockEntity {
-        public FuelEntity() {
-            super(ENTITY_TYPE);
+    @Nullable
+    @Override
+    public NamedScreenHandlerFactory createScreenHandlerFactory(BlockState state, World world, BlockPos pos) {
+        return super.createScreenHandlerFactory(state, world, pos);
+    }
+
+    protected static class Entity extends BarrelBlockEntity {
+        protected Entity(BlockPos pos, BlockState state) {
+            super(pos, state);
+        }
+
+        @Override
+        protected Text getContainerName() {
+            return new TranslatableText("container.boson.fuel_chest");
+        }
+
+        @Override
+        public Text getDisplayName() {
+            return super.getDisplayName();
+        }
+
+        @Override
+        protected net.minecraft.screen.ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
+            return GenericContainerScreenHandler.createGeneric9x6(syncId, playerInventory, this);
         }
     }
-    */
 }
