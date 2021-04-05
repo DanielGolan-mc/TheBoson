@@ -84,7 +84,7 @@ public class FuelChest extends BarrelBlock {
 
         public Entity(BlockPos pos, BlockState state) {
             super(pos, state);
-            this.inventory = DefaultedList.ofSize(27, ItemStack.EMPTY);
+            this.inventory = DefaultedList.ofSize(size(), ItemStack.EMPTY);
         }
 
         @Override
