@@ -3,11 +3,14 @@ package net.danielgolan.boson.registry;
 import net.danielgolan.boson.Boson;
 import net.danielgolan.boson.blocks.Stone;
 import net.danielgolan.boson.blocks.containers.FuelChest;
+import net.danielgolan.boson.blocks.containers.StainedChest;
 import net.danielgolan.boson.enchantments.IceAspect;
 import net.danielgolan.boson.gameplay.CreativeMode;
 import net.danielgolan.boson.items.BuildingBlock;
 import net.danielgolan.boson.items.DecorationBlock;
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
+import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.enchantment.Enchantment;
@@ -49,6 +52,8 @@ public final class BosonElements {
         public static final Block DRIP_STONE_SMOOTH = new Stone(BlockSoundGroup.DRIPSTONE_BLOCK);
         public static final Block DRIP_STONE_TILES  = new Stone(BlockSoundGroup.DRIPSTONE_BLOCK);
         public static final Block FUEL_CHEST = new FuelChest();
+        public static final Block STAINED_CHEST = new StainedChest(AbstractBlock.Settings.of(Material.GLASS)
+                .strength(2.5F).sounds(BlockSoundGroup.AMETHYST_BLOCK), () -> BlockEntityType.CHEST);
 
         public static void register() {
             BosonElements.register("dripstone_bricks", DRIP_STONE_BRICKS);
@@ -57,6 +62,7 @@ public final class BosonElements {
             BosonElements.register("chiseled_dripstone", DRIP_STONE_CHISEL);
             BosonElements.register("smooth_dripstone", DRIP_STONE_SMOOTH);
             BosonElements.register("fuel_chest", FUEL_CHEST);
+            BosonElements.register("stained_chest", STAINED_CHEST);
         }
     }
 

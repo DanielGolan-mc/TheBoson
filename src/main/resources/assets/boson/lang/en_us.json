@@ -5,5 +5,8 @@
   "block.boson.dripstone_tiles": "Dripstone Tiles",
   "block.boson.chiseled_dripstone": "Chiseled Dripstone",
   "block.boson.smooth_dripstone": "Smooth Dripstone",
-  "enchantment.boson.ice_aspect": "Ice Aspect"
+  "block.boson.fuel_chest": "Fuel Pile",
+  "enchantment.boson.ice_aspect": "Ice Aspect",
+  "container.boson.fuel_chest": "Fuel Barrel",
+  "container.boson.fuel_pile": "Fuel Pile"
 }

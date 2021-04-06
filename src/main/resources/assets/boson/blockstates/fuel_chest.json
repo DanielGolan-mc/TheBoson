@@ -1,40 +1,56 @@
 {
   "variants": {
-    "facing=west,open=true": {
-      "model": "boson:block/fuel_chest/open/west"
+    "facing=down,open=false": {
+      "x": 180,
+      "model": "boson:block/fuel_chest/normal"
     },
     "facing=down,open=true": {
-      "model": "boson:block/fuel_chest/open/down"
+      "x": 180,
+      "model": "boson:block/fuel_chest/open/normal"
+    },
+    "facing=east,open=false": {
+      "x": 90,
+      "y": 90,
+      "model": "boson:block/fuel_chest/normal"
     },
     "facing=east,open=true": {
-      "model": "boson:block/fuel_chest/open/east"
+      "x": 90,
+      "y": 90,
+      "model": "boson:block/fuel_chest/open/normal"
+    },
+    "facing=north,open=false": {
+      "x": 90,
+      "model": "boson:block/fuel_chest/normal"
+    },
+    "facing=north,open=true": {
+      "x": 90,
+      "model": "boson:block/fuel_chest/open/normal"
+    },
+    "facing=south,open=false": {
+      "x": 90,
+      "y": 180,
+      "model": "boson:block/fuel_chest/normal"
+    },
+    "facing=south,open=true": {
+      "x": 90,
+      "y": 180,
+      "model": "boson:block/fuel_chest/open/normal"
+    },
+    "facing=up,open=false": {
+      "model": "boson:block/fuel_chest/up"
     },
     "facing=up,open=true": {
       "model": "boson:block/fuel_chest/open/up"
     },
-    "facing=south,open=true": {
-      "model": "boson:block/fuel_chest/open/south"
-    },
-    "facing=north,open=true": {
-      "model": "boson:block/fuel_chest/open/north"
-    },
-    "facing=down,open=false": {
-      "model": "boson:block/fuel_chest/down"
-    },
     "facing=west,open=false": {
-      "model": "boson:block/fuel_chest/west"
+      "x": 90,
+      "y": 270,
+      "model": "boson:block/fuel_chest/normal"
     },
-    "facing=east,open=false": {
-      "model": "boson:block/fuel_chest/east"
-    },
-    "facing=south,open=false": {
-      "model": "boson:block/fuel_chest/south"
-    },
-    "facing=north,open=false": {
-      "model": "boson:block/fuel_chest/north"
-    },
-    "facing=up,open=false": {
-      "model": "boson:block/fuel_chest/up"
+    "facing=west,open=true": {
+      "x": 90,
+      "y": 270,
+      "model": "boson:block/fuel_chest/open/normal"
     }
   }
 }

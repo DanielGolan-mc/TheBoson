@@ -1,0 +1,6 @@
+{
+  "parent":"boson:block/fuel_chest/normal",
+  "textures": {
+    "top": "boson:blocks/fuel_chest_top_open"
+  }
+}
