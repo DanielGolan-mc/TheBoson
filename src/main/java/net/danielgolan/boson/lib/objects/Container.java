@@ -127,7 +127,7 @@ public abstract class Container<E extends Container.Entity<Block>, Block extends
     public static class Entity<C extends Container<? extends Entity<C>, C>>
             extends LootableContainerBlockEntity implements NamedScreenHandlerFactory {
 
-        protected DefaultedList<ItemStack> inventory = DefaultedList.ofSize(size(), ItemStack.EMPTY);
+        protected DefaultedList<ItemStack> inventory;
         protected final ChestStateManager stateManager = new ChestStateManager() {
             protected final void onChestOpened(World world, BlockPos pos, BlockState state) {
                 Container.Entity.this.onChestOpened(world, pos, state);
@@ -148,6 +148,7 @@ public abstract class Container<E extends Container.Entity<Block>, Block extends
         public Entity(BlockEntityType<?> blockEntityType, @NotNull C c, BlockPos pos, BlockState state) {
             super(blockEntityType, pos, state);
             container = c;
+            inventory = DefaultedList.ofSize(size(), ItemStack.EMPTY);
         }
 
         protected void onChestOpened(World world, BlockPos pos, BlockState state) {
