@@ -20,6 +20,9 @@
   "entrypoints": {
     "main": [
       "net.danielgolan.boson.Boson"
+    ],
+    "client": [
+      "net.danielgolan.boson.Boson"
     ]
   },
   "mixins": [],

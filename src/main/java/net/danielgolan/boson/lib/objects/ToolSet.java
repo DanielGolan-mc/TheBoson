@@ -1,4 +1,4 @@
-package net.danielgolan.boson.items;
+package net.danielgolan.boson.lib.objects;
 
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.*;

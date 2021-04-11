@@ -1,5 +1,7 @@
-package net.danielgolan.boson.lib.blocks.containers;
+package net.danielgolan.boson.lib.objects;
 
+import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
+import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
@@ -14,35 +16,58 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.GenericContainerScreenHandler;
+import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class Container<E extends Container<E>.Entity> extends BlockWithEntity {
-    private final Provider<E> provider;
+import java.util.Objects;
 
-    protected Container(Settings settings, Provider<E> provider) {
+/**
+ * @param <E> the entity which stores the inventory of this container
+ * @param <Block> the container block
+ */
+public abstract class Container<E extends Container.Entity<Block>, Block extends Container<E, Block>>
+        extends BlockWithEntity implements FabricBlockEntityTypeBuilder.Factory<E> {
+    private Provider<Block> provider;
+
+    protected Container(Settings settings, Provider<Block> provider) {
         super(settings);
         this.provider = provider;
     }
 
-    public abstract void onBlockPlaced();
+    protected Container(Settings settings) {
+        this(settings, Provider.empty());
+    }
+
+    public void onBlockPlaced() {};
 
     public int size() {
         return 27;
     }
 
+    public void setProvider(Provider<Block> provider) {
+        this.provider = provider;
+    }
+
     @Nullable
     @Override
-    public final BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return provider.newInstance();
+    public E createBlockEntity(BlockPos pos, BlockState state) {
+        return provider.newInstance(pos, state);
+    }
+
+    @Override
+    public final E create(BlockPos blockPos, BlockState blockState) {
+        return createBlockEntity(blockPos, blockState);
     }
 
     @Override
@@ -52,7 +77,8 @@ public abstract class Container<E extends Container<E>.Entity> extends BlockWith
         } else {
             BlockEntity blockEntity = world.getBlockEntity(pos);
 
-            provider.ifInstance(blockEntity, entity -> player.openHandledScreen(provider.asInstance(entity)));
+            if (provider.isInstance(blockEntity))
+                player.openHandledScreen(provider.asInstance(blockEntity));
 
             return ActionResult.CONSUME;
         }
@@ -65,11 +91,42 @@ public abstract class Container<E extends Container<E>.Entity> extends BlockWith
         if (itemStack.hasCustomName()) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
 
-            provider.ifInstance(blockEntity, entity -> entity.setCustomName(itemStack.getName()));
+            if (provider.isInstance(blockEntity))
+                provider.asInstance(blockEntity).setCustomName(itemStack.getName());
         }
     }
 
-    protected abstract class Entity extends LootableContainerBlockEntity {
+    Provider<Block> getProvider() {
+        return provider;
+    }
+
+    @Override
+    public BlockRenderType getRenderType(BlockState state) {
+        return BlockRenderType.MODEL;
+    }
+
+    public boolean hasComparatorOutput(BlockState state) {
+        return true;
+    }
+
+    public int getComparatorOutput(BlockState state, World world, BlockPos pos) {
+        return ScreenHandler.calculateComparatorOutput(world.getBlockEntity(pos));
+    }
+
+    protected abstract void playSound(BlockState state, SoundEvent soundEvent, World world, BlockPos pos);
+
+    protected abstract Text getContainerTitle(World world, BlockPos pos);
+
+    public boolean isValid(int slot, ItemStack stack) {
+        return true;
+    }
+
+    /**
+     * @param <C> the container type of this entity
+     */
+    public static class Entity<C extends Container<? extends Entity<C>, C>>
+            extends LootableContainerBlockEntity implements NamedScreenHandlerFactory {
+
         protected DefaultedList<ItemStack> inventory = DefaultedList.ofSize(size(), ItemStack.EMPTY);
         protected final ChestStateManager stateManager = new ChestStateManager() {
             protected final void onChestOpened(World world, BlockPos pos, BlockState state) {
@@ -85,19 +142,38 @@ public abstract class Container<E extends Container<E>.Entity> extends BlockWith
                 return Container.Entity.this.isPlayerViewing(player);
             }
         };
+        private final @NotNull C container;
         private boolean open;
 
-        protected Entity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) {
-            super(blockEntityType, blockPos, blockState);
+        public Entity(BlockEntityType<?> blockEntityType, @NotNull C c, BlockPos pos, BlockState state) {
+            super(blockEntityType, pos, state);
+            container = c;
         }
 
-        protected void onChestOpened (World world, BlockPos pos, BlockState state) {
-            playSound(state, provider.provideSound(SoundType.open));
+        protected void onChestOpened(World world, BlockPos pos, BlockState state) {
+            playSound(state, container.getProvider().provideSound(SoundType.open));
             setOpen(state, true);
         }
 
-        protected void onChestClosed (World world, BlockPos pos, BlockState state) {
-            playSound(state, provider.provideSound(SoundType.close));
+        @Override
+        public void onOpen(PlayerEntity player) {
+            if (player == null) return;
+
+            if (!player.isSpectator()) {
+                this.stateManager.openChest(player, this.getWorld(), this.getPos(), this.getCachedState());
+            }
+        }
+
+        public void onClose(PlayerEntity player) {
+            if (player == null) return;
+
+            if (!player.isSpectator()) {
+                this.stateManager.closeChest(player, this.getWorld(), this.getPos(), this.getCachedState());
+            }
+        }
+
+        protected void onChestClosed(World world, BlockPos pos, BlockState state) {
+            playSound(state, container.getProvider().provideSound(SoundType.close));
             setOpen(state, false);
         }
 
@@ -114,10 +190,12 @@ public abstract class Container<E extends Container<E>.Entity> extends BlockWith
 
         @Override
         public final int size() {
-            return Container.this.size();
+            return Objects.requireNonNull(container).size();
         }
 
-        public abstract void playSound(BlockState state, SoundEvent soundEvent);
+        public final void playSound(BlockState state, SoundEvent soundEvent) {
+            container.playSound(state, soundEvent, getWorld(), getPos());
+        }
 
         public void setOpen(BlockState state, boolean open){
             this.open = open;
@@ -156,16 +234,55 @@ public abstract class Container<E extends Container<E>.Entity> extends BlockWith
             if (!this.deserializeLootTable(nbt))
                 Inventories.readNbt(nbt, this.inventory);
         }
+
+        @Override
+        protected DefaultedList<ItemStack> getInvStackList() {
+            return inventory;
+        }
+
+        @Override
+        protected void setInvStackList(DefaultedList<ItemStack> list) {
+            inventory = list;
+        }
+
+        @Override
+        protected final Text getContainerName() {
+            if (hasCustomName()) return getCustomName();
+            else return container.getContainerTitle(this.world, this.pos);
+        }
+
+        public final @NotNull C getContainer() {
+            return container;
+        }
+
+        @Nullable
+        @Override
+        public ScreenHandler createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+            return super.createMenu(i, playerInventory, playerEntity);
+        }
+
+        @Override
+        public boolean isValid(int slot, ItemStack stack) {
+            return container.isValid(slot, stack);
+        }
     }
 
-    protected interface Provider<E extends Container<E>.Entity> {
-        E newInstance();
-        boolean isInstance(BlockEntity blockEntity);
-        default E asInstance(BlockEntity blockEntity){
-            return (E) blockEntity;
+    /**
+     * @param <C> the container this provider returns
+     */
+    public interface Provider<C extends Container<? extends Container.Entity<C>, C>> {
+        static <E extends Container.Entity<C>, C extends Container<E, C>> Provider<C> empty(){
+            return new Provider<C>() {};
         }
-        default void ifInstance(BlockEntity blockEntity, Function<E> function) {
-            if (isInstance(blockEntity)) function.then(asInstance(blockEntity));
+
+        default <E extends Container.Entity<C>> E newInstance(BlockPos pos, BlockState state){
+            return null;
+        }
+        default boolean isInstance(BlockEntity blockEntity) {
+            return false;
+        }
+        default <E extends Container.Entity<C>> E asInstance(BlockEntity blockEntity){
+            return (E) blockEntity;
         }
 
         default SoundEvent provideSound(Container.SoundType soundType){
@@ -176,13 +293,9 @@ public abstract class Container<E extends Container<E>.Entity> extends BlockWith
                 default    : return null;
             }
         }
-
-        interface Function<E extends Container<E>.Entity> {
-            void then(E entity);
-        }
     }
 
-    enum SoundType {
+    protected enum SoundType {
         open, close
     }
 }

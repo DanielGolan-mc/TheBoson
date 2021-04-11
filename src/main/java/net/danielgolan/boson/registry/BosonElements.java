@@ -8,6 +8,8 @@ import net.danielgolan.boson.enchantments.IceAspect;
 import net.danielgolan.boson.gameplay.CreativeMode;
 import net.danielgolan.boson.items.BuildingBlock;
 import net.danielgolan.boson.items.DecorationBlock;
+import net.danielgolan.boson.lib.objects.Container;
+import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Material;
@@ -26,7 +28,7 @@ public final class BosonElements {
         Blocks.register();
         Items.register();
         Enchantments.register();
-        FuelChest.Entity.register();
+        BlockEntities.register();
     }
     public static void register(String path, Item item){
         Registry.register(Registry.ITEM, new Identifier(Boson.BOSON_MOD_ID, path), item);
@@ -51,7 +53,7 @@ public final class BosonElements {
         public static final Block DRIP_STONE_CHISEL = new Stone(BlockSoundGroup.DRIPSTONE_BLOCK);
         public static final Block DRIP_STONE_SMOOTH = new Stone(BlockSoundGroup.DRIPSTONE_BLOCK);
         public static final Block DRIP_STONE_TILES  = new Stone(BlockSoundGroup.DRIPSTONE_BLOCK);
-        public static final Block FUEL_CHEST = new FuelChest();
+        public static final Container<Container.Entity<FuelChest>, FuelChest> FUEL_CHEST = new FuelChest();
         public static final Block STAINED_CHEST = new StainedChest(AbstractBlock.Settings.of(Material.GLASS)
                 .strength(2.5F).sounds(BlockSoundGroup.AMETHYST_BLOCK), () -> BlockEntityType.CHEST);
 
@@ -89,6 +91,15 @@ public final class BosonElements {
 
         public static void register() {
             BosonElements.register("ice_aspect", ICE_ASPECT);
+        }
+    }
+
+    public static final class BlockEntities {
+        public static final BlockEntityType<FuelChest.Entity<FuelChest>> FUEL_CHEST = FabricBlockEntityTypeBuilder
+                .create(BosonElements.Blocks.FUEL_CHEST, BosonElements.Blocks.FUEL_CHEST).build();
+
+        public static void register(){
+            BosonElements.register("fuel_chest", FUEL_CHEST);
         }
     }
 }
